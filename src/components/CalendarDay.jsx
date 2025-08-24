@@ -1,4 +1,4 @@
-import { getPriorityColor } from "../utils/helpers";
+import { isOverdue } from "../utils/helpers";
 
 const CalendarDay = ({ date, currentMonth, tasks, onSelect }) => {
   const isOtherMonth = date.getMonth() !== currentMonth;
@@ -9,36 +9,37 @@ const CalendarDay = ({ date, currentMonth, tasks, onSelect }) => {
       new Date(task.dueDate).toDateString() === date.toDateString()
   );
 
+  const overdueTasks = dayTasks.filter(task =>
+    task.status !== 'completed' && isOverdue(task.dueDate)
+  );
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    onSelect(date, dayTasks);
+  };
+
   return (
     <div
       className={`calendar-day ${isOtherMonth ? "other-month" : ""} ${
         isToday ? "today" : ""
-      } bg-[var(--bg-secondary)] min-h-[120px] p-4 cursor-pointer transition-all duration-300 flex flex-col border border-transparent`}
-      onClick={() => onSelect(date)}
+      } ${dayTasks.length > 0 ? "has-tasks" : ""} bg-[var(--bg-secondary)] min-h-[120px] p-3 cursor-pointer transition-all duration-300 flex flex-col justify-between border border-transparent hover:border-[var(--brand-primary)] hover:bg-[var(--bg-tertiary)]`}
+      onClick={handleClick}
     >
-      <div className="calendar-day-number font-semibold mb-2 text-lg">
-        {date.getDate()}
+      {/* Date number */}
+      <div className="calendar-day-number font-semibold text-lg flex justify-between items-start">
+        <span className={isOtherMonth ? "text-[var(--text-tertiary)]" : ""}>{date.getDate()}</span>
+        {overdueTasks.length > 0 && (
+          <span className="text-red-400 text-xs">⚠️</span>
+        )}
       </div>
 
+      {/* Task count indicator */}
       {dayTasks.length > 0 && (
-        <>
-          <div className="calendar-task-indicators flex flex-wrap gap-1 mt-2">
-            {dayTasks.slice(0, 3).map((task) => (
-              <div
-                key={task.id}
-                className="w-2.5 h-2.5 rounded-full shadow-sm"
-                style={{ backgroundColor: getPriorityColor(task.priority) }}
-                title={task.title}
-              ></div>
-            ))}
+        <div className="flex justify-center items-center mt-auto">
+          <div className="task-count-badge bg-[var(--brand-primary)] text-white rounded-full px-3 py-1 text-sm font-semibold shadow-md hover:bg-[var(--brand-secondary)] transition-colors duration-200">
+            {dayTasks.length} {dayTasks.length === 1 ? 'task' : 'tasks'}
           </div>
-
-          {dayTasks.length > 3 && (
-            <div className="calendar-task-count bg-[var(--brand-gradient)] text-white rounded-full px-3 py-1 text-sm font-semibold shadow-sm mt-auto">
-              +{dayTasks.length - 3}
-            </div>
-          )}
-        </>
+        </div>
       )}
     </div>
   );

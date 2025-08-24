@@ -66,13 +66,14 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-primary);
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
   color: var(--text-primary);
   line-height: 1.6;
-  padding: var(--space-lg);
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -112,15 +113,15 @@ body {
 .top-bar {
   display: flex;
   gap: var(--space-md);
-  margin-bottom: var(--space-xl);
+  margin-bottom: 0;
   flex-wrap: wrap;
   align-items: center;
-  background: var(--bg-card);
-  padding: var(--space-md);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
 }
 
 .create-task-btn {
@@ -193,8 +194,8 @@ body {
 .view-toggle {
   display: flex;
   gap: var(--space-xs);
-  margin-bottom: var(--space-xl);
-  background: var(--bg-card);
+  margin-bottom: var(--space-lg);
+  background: var(--bg-tertiary);
   padding: var(--space-xs);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
@@ -234,7 +235,6 @@ body {
   margin-bottom: var(--space-xl);
   box-shadow: var(--shadow-lg);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  display: none;
   backdrop-filter: blur(10px);
 }
 
@@ -471,10 +471,10 @@ body {
   background: var(--bg-card);
   border-radius: var(--border-radius-lg);
   padding: var(--space-lg);
-  width: 320px;
+  flex: 1;
+  min-width: 280px;
   min-height: 600px;
   box-shadow: var(--shadow-lg);
-  flex-shrink: 0;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -914,7 +914,7 @@ textarea {
   }
   
   .column {
-    width: 280px;
+    min-width: 250px;
   }
 }
 
@@ -1020,5 +1020,373 @@ textarea:focus-visible,
     --bg-tertiary: #333333;
     --text-primary: #ffffff;
     --text-secondary: #ffffff;
+  }
+}
+
+/* Custom animations for login/register pages */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Enhanced focus ring styles */
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-opacity-20:focus {
+  --tw-ring-opacity: 0.2;
+}
+
+.focus\:ring-\[var\(--brand-primary\)\]:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: var(--brand-primary);
+}
+
+/* Enhanced auth form container styles */
+.auth-form-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-form-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--brand-gradient);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.auth-form-container:hover::before {
+  opacity: 0.3;
+}
+
+/* Improved button hover effects */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-shimmer:hover::before {
+  left: 100%;
+}
+
+/* Enhanced input field animations */
+.input-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.input-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--brand-gradient);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-glow:focus-within::after {
+  opacity: 1;
+}
+
+/* Floating label animation */
+.floating-label {
+  position: relative;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  transform: translateY(-1.5rem) scale(0.8);
+  color: var(--brand-primary);
+}
+
+.floating-label label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background: var(--bg-secondary);
+  padding: 0 0.5rem;
+}
+
+/* Enhanced card hover effects */
+.card-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.card-hover-effect::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--brand-gradient);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-hover-effect:hover::before {
+  opacity: 0.5;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Pulse animation for icons */
+.icon-pulse {
+  animation: iconPulse 2s infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* Gradient text animation */
+.gradient-text-animate {
+  background: var(--brand-gradient);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Loading spinner enhancement */
+.spinner-enhanced {
+  animation: spin 1s linear infinite, pulse 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced backdrop blur */
+.backdrop-blur-enhanced {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Smooth transitions for all interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced shadow effects */
+.shadow-glow {
+  box-shadow:
+    0 0 20px rgba(59, 130, 246, 0.3),
+    0 0 40px rgba(139, 92, 246, 0.2),
+    0 0 60px rgba(6, 182, 212, 0.1);
+}
+
+.shadow-glow-hover:hover {
+  box-shadow:
+    0 0 30px rgba(59, 130, 246, 0.4),
+    0 0 60px rgba(139, 92, 246, 0.3),
+    0 0 90px rgba(6, 182, 212, 0.2);
+}
+/* Main Application Container Styles */
+.app-container {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 50%);
+}
+
+.main-content-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.content-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  margin-bottom: 2rem;
+  transition: all var(--transition-normal);
+}
+
+.content-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl), 0 0 40px rgba(59, 130, 246, 0.1);
+}
+
+/* Enhanced responsive design for main app */
+@media (max-width: 1200px) {
+  .main-content-wrapper {
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+  }
+  
+  .content-card {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  
+  .content-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius-lg);
+  }
+}
+/* Enhanced Calendar Task Styles */
+.calendar-task-item {
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(5px);
+}
+
+.calendar-task-item:hover {
+  transform: translateX(2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-task-summary {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 4px;
+}
+
+.status-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calendar-task-indicators {
+  margin-top: 4px;
+}
+
+.calendar-day-number {
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive Calendar Task Styles */
+@media (max-width: 768px) {
+  .calendar-day {
+    min-height: 100px;
+    padding: 6px;
+  }
+  
+  .calendar-task-item {
+    padding: 1px;
+    font-size: 10px;
+  }
+  
+  .status-badge {
+    font-size: 8px;
+    padding: 1px 2px;
   }
 }

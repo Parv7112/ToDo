@@ -1,4 +1,7 @@
+import { useState } from "react";
 import CalendarDay from "./CalendarDay";
+import DayTasksModal from "./DayTasksModal";
+import TaskDetailsModal from "./TaskDetailsModal";
 
 const Calendar = ({
   currentDate,
@@ -6,7 +9,13 @@ const Calendar = ({
   setCurrentDate,
   setSelectedDate,
   setCurrentView,
+  onUpdateTask,
+  onDeleteTask,
 }) => {
+  const [showDayModal, setShowDayModal] = useState(false);
+  const [showTaskModal, setShowTaskModal] = useState(false);
+  const [selectedDate, setSelectedDateState] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null);
   const firstDay = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
@@ -24,8 +33,52 @@ const Calendar = ({
     return date;
   });
 
+  const handleDaySelect = (date, dayTasks) => {
+    if (dayTasks.length > 0) {
+      setSelectedDateState(date);
+      setShowDayModal(true);
+    } else {
+      // If no tasks, go to board view for that date
+      setSelectedDate(date);
+      setCurrentView("board");
+    }
+  };
+
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+    setShowTaskModal(true);
+    setShowDayModal(false);
+  };
+
+  const handleTaskUpdate = (updatedTask) => {
+    if (onUpdateTask) {
+      onUpdateTask(selectedTask.id, updatedTask);
+    }
+    setSelectedTask(null);
+    setShowTaskModal(false);
+  };
+
+  const handleTaskDelete = () => {
+    if (onDeleteTask && selectedTask) {
+      onDeleteTask(selectedTask.id);
+    }
+    setSelectedTask(null);
+    setShowTaskModal(false);
+  };
+
+  const handleCloseDayModal = () => {
+    setShowDayModal(false);
+    setSelectedDateState(null);
+  };
+
+  const handleCloseTaskModal = () => {
+    setShowTaskModal(false);
+    setSelectedTask(null);
+  };
+
   return (
-    <div className="calendar-container bg-[var(--bg-card)] rounded-lg p-8 mb-8 shadow-lg border border-[rgba(255,255,255,0.05)] backdrop-blur-md animate-fadeIn">
+    <>
+      <div className="calendar-container bg-[var(--bg-card)] rounded-lg p-8 mb-8 shadow-lg border border-[rgba(255,255,255,0.05)] backdrop-blur-md animate-fadeIn">
       {/* Header */}
       <div className="calendar-header flex justify-between items-center mb-8">
         <button
@@ -75,14 +128,30 @@ const Calendar = ({
             date={date}
             currentMonth={currentDate.getMonth()}
             tasks={tasks}
-            onSelect={(d) => {
-              setSelectedDate(d);
-              setCurrentView("board");
-            }}
+            onSelect={handleDaySelect}
           />
         ))}
       </div>
-    </div>
+      </div>
+
+      {/* Day Tasks Modal */}
+      <DayTasksModal
+        show={showDayModal}
+        date={selectedDate}
+        tasks={tasks}
+        onClose={handleCloseDayModal}
+        onTaskClick={handleTaskClick}
+      />
+
+      {/* Task Details Modal */}
+      <TaskDetailsModal
+        show={showTaskModal}
+        task={selectedTask}
+        onClose={handleCloseTaskModal}
+        onUpdate={handleTaskUpdate}
+        onDelete={handleTaskDelete}
+      />
+    </>
   );
 };
 

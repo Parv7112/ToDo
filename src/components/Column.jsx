@@ -3,7 +3,7 @@ import Task from "./Task";
 const Column = ({ status, title, tasks, onDrop, onDragOver, setCurrentTaskId }) => {
   return (
     <div
-      className="column bg-[var(--bg-card)] rounded-lg p-6 w-[320px] min-h-[600px] shadow-[var(--shadow-lg)] flex-shrink-0 border border-[rgba(255,255,255,0.05)] backdrop-blur-md transition-all duration-[var(--transition-normal)] hover:shadow-[var(--shadow-xl)]"
+      className="column bg-[var(--bg-card)] rounded-lg p-6 flex-1 min-w-[280px] min-h-[600px] shadow-[var(--shadow-lg)] border border-[rgba(255,255,255,0.05)] backdrop-blur-md transition-all duration-[var(--transition-normal)] hover:shadow-[var(--shadow-xl)]"
       onDragOver={onDragOver}
       onDrop={(e) => onDrop(e, status)}
       id={status}

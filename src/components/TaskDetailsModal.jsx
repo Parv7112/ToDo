@@ -5,7 +5,7 @@ const TaskDetailsModal = ({ show, task, onClose, onUpdate, onDelete }) => {
   const [description, setDescription] = useState(task ? task.description || '' : '');
   const [priority, setPriority] = useState(task ? task.priority : 'medium');
   const [status, setStatus] = useState(task ? task.status : 'todo');
-  const [dueDate, setDueDate] = useState(task ? task.dueDate || '' : '');
+  const [dueDate, setDueDate] = useState(task ? (task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '') : '');
 
   useEffect(() => {
     if (task) {
@@ -13,7 +13,8 @@ const TaskDetailsModal = ({ show, task, onClose, onUpdate, onDelete }) => {
       setDescription(task.description || '');
       setPriority(task.priority);
       setStatus(task.status);
-      setDueDate(task.dueDate || '');
+      // Format date for HTML date input (YYYY-MM-DD)
+      setDueDate(task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '');
     }
   }, [task]);
 

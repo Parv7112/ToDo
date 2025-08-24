@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 const TaskModal = ({ show, onClose, onSave }) => {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('medium');
   const [status, setStatus] = useState('todo');
   const [dueDate, setDueDate] = useState('');
@@ -11,8 +12,9 @@ const TaskModal = ({ show, onClose, onSave }) => {
       window.showToast('Please enter a task title', 'error');
       return;
     }
-    onSave({ title, priority, status, dueDate });
+    onSave({ title, description, priority, status, dueDate });
     setTitle('');
+    setDescription('');
     setPriority('medium');
     setStatus('todo');
     setDueDate('');
@@ -31,6 +33,13 @@ const TaskModal = ({ show, onClose, onSave }) => {
           placeholder="Task Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          className="p-4 rounded-lg border border-[rgba(255,255,255,0.1)] bg-[var(--bg-secondary)] text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:bg-[var(--bg-tertiary)] transition-all duration-[var(--transition-normal)] resize-none"
+          placeholder="Task Description (optional)"
+          rows="3"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <select
           className="p-4 rounded-lg border border-[rgba(255,255,255,0.1)] bg-[var(--bg-secondary)] text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:bg-[var(--bg-tertiary)] transition-all duration-[var(--transition-normal)]"
